@@ -1,0 +1,19 @@
+{
+  "name": "vuex-class.js",
+  "version": "0.0.1",
+  "description": "Use the ES6 class to write the vuex module.",
+  "main": "./vuex-class.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lzxb/vuex-class.git"
+  },
+  "author": "狼族小狈",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lzxb/vuex-class/issues"
+  },
+  "homepage": "https://github.com/lzxb/vuex-class#readme"
+}
