@@ -2,9 +2,17 @@
   "name": "vuex-class.js",
   "version": "0.0.1",
   "description": "Use the ES6 class to write the vuex module.",
-  "main": "./vuex-class.js",
+  "main": "dist/vuex-class.common.js",
+  "module": "dist/vuex-class.esm.js",
+  "unpkg": "dist/vuex-class.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "rollup --config --watch",
+    "build": "rollup --config",
+    "test": "npm run lint && npm run e2e:run",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "e2e:open": "cypress open",
+    "e2e:run": "cypress run"
   },
   "repository": {
     "type": "git",
@@ -12,8 +20,23 @@
   },
   "author": "狼族小狈",
   "license": "MIT",
+  "keywords": [
+    "vue",
+    "vuex",
+    "vuex class"
+  ],
   "bugs": {
     "url": "https://github.com/lzxb/vuex-class/issues"
   },
-  "homepage": "https://github.com/lzxb/vuex-class#readme"
+  "homepage": "https://github.com/lzxb/vuex-class#readme",
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "rollup": "^0.57.1"
+  }
 }
