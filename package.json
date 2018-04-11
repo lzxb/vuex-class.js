@@ -23,7 +23,8 @@
   "keywords": [
     "vue",
     "vuex",
-    "vuex class"
+    "vuex class",
+    "vuex-class-module"
   ],
   "bugs": {
     "url": "https://github.com/lzxb/vuex-class/issues"
