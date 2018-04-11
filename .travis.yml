@@ -1,12 +1,10 @@
 language: node_js
-node_js: "stable"
+node_js: stable
 
-before_install:
-  - stty cols 80
-
-dist: trusty
-sudo: required
-
+env:
+  global:
+    - SERVICE_NAME=travis-pro
+    - COVERALLS_REPO_TOKEN=9cdJAJEmw2GLKBfbnciQTu90nm1LiSHnt
 
 install: 
   - npm install
