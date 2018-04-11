@@ -1,6 +1,6 @@
 {
   "name": "vuex-class.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Use the ES6 class to write the vuex module.",
   "main": "dist/vuex-class.common.js",
   "module": "dist/vuex-class.esm.js",
