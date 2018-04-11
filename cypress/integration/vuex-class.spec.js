@@ -122,7 +122,7 @@ describe('vuex class', () => {
     ])
   })
 
-  it ('errors', () => {
+  it('errors', () => {
     class MyVuexClass extends VuexClass {
       constructor () {
         super()
@@ -135,7 +135,7 @@ describe('vuex class', () => {
     const myVuexClass = new MyVuexClass()
     let errors = []
     try {
-      myVuexClass.context
+      console.log(myVuexClass.context)
     } catch (e) {
       errors.push(e.toString())
     }
@@ -145,9 +145,11 @@ describe('vuex class', () => {
     } catch (e) {
       errors.push(e.toString())
     }
+
     expect(errors).to.deep.equal([
       `Error: [vuex-class] Please call the 'new Vuex.store({ plusins: [ VuexClass.init() ] })' method`,
       `Error: [vuex-class] You should not update the module state directly`
     ])
+    expect(store.state.count).equals(0)
   })
 })

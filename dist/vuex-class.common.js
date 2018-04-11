@@ -1,122 +1,158 @@
 'use strict';
 
-const _actionName = '_[vuex-class]_init';
-
-const isFunction = (any) => {
-  return typeof any === 'function'
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
 };
 
-const getPrototypes = (obj) => {
-  const prototypes = [];
-  let current = obj;
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var _actionName = '_[vuex-class]_init';
+
+var isFunction = function isFunction(any) {
+  return typeof any === 'function';
+};
+
+var getPrototypes = function getPrototypes(obj) {
+  var prototypes = [];
+  var current = obj;
   while (current !== VuexClass.prototype) {
     current = Object.getPrototypeOf(current);
     prototypes.push(current);
   }
-  return prototypes
+  return prototypes;
 };
 
-const getDescriptors = (prototypes) => {
-  const descriptors = {};
-  let i = prototypes.length;
+var getDescriptors = function getDescriptors(prototypes) {
+  var descriptors = {};
+  var i = prototypes.length;
   while (i--) {
-    const prototype = prototypes[i];
-    Object.assign(descriptors, Object.getOwnPropertyDescriptors(prototype));
+    var prototype = prototypes[i];
+    _extends(descriptors, Object.getOwnPropertyDescriptors(prototype));
   }
-  return descriptors
+  return descriptors;
 };
 
-const throwError = (msg) => {
-  throw new Error(`[vuex-class] ${msg}`)
+var throwError = function throwError(msg) {
+  throw new Error('[vuex-class] ' + msg);
 };
 
-class VuexClass {
-  constructor () {
-    const descriptors = getDescriptors(getPrototypes(this));
+var VuexClass = function VuexClass() {
+  var _this = this;
 
-    this.state = {};
-    this.getters = {};
-    this.mutations = {};
-    this.actions = {};
-    let _context = null;
-    Object.defineProperty(this, 'context', {
-      get () {
-        if (!_context) {
-          throwError(`Please call the 'new Vuex.store({ plusins: [ VuexClass.init() ] })' method`);
-        }
-        return _context
-      },
-      set (context) {
-        _context = context;
+  classCallCheck(this, VuexClass);
+
+  var descriptors = getDescriptors(getPrototypes(this));
+
+  this.state = {};
+  this.getters = {};
+  this.mutations = {};
+  this.actions = {};
+  var _context = null;
+  Object.defineProperty(this, 'context', {
+    get: function get$$1() {
+      if (!_context) {
+        throwError('Please call the \'new Vuex.store({ plusins: [ VuexClass.init() ] })\' method');
       }
-    });
-    Object.keys(descriptors).forEach(name => {
-      if (name === 'constructor') return
-      const descriptor = descriptors[name];
-      const newDescriptor = {};
+      return _context;
+    },
+    set: function set$$1(context) {
+      _context = context;
+    }
+  });
+  Object.keys(descriptors).forEach(function (name) {
+    if (name === 'constructor') return;
+    var descriptor = descriptors[name];
+    var newDescriptor = {};
 
-      // vuex getters
-      if (isFunction(descriptor.get)) {
-        newDescriptor.get = () => {
-          return this.context.getters[name]
-        };
-        this.getters[name] = () => {
-          return descriptor.get.call(this)
-        };
-      }
+    // vuex getters
+    if (isFunction(descriptor.get)) {
+      newDescriptor.get = function () {
+        return _this.context.getters[name];
+      };
+      _this.getters[name] = function () {
+        return descriptor.get.call(_this);
+      };
+    }
 
-      // vuex mutations
-      if (isFunction(descriptor.set)) {
-        newDescriptor.set = (payload) => {
-          return this.context.commit(name, payload)
-        };
-        this.mutations[name] = (state, payload) => {
-          return descriptor.set.call(this, payload)
-        };
-        if (!isFunction(descriptor.get)) {
-          newDescriptor.get = () => {
-            return (payload) => {
-              return this.context.commit(name, payload)
-            }
+    // vuex mutations
+    if (isFunction(descriptor.set)) {
+      newDescriptor.set = function (payload) {
+        return _this.context.commit(name, payload);
+      };
+      _this.mutations[name] = function (state, payload) {
+        return descriptor.set.call(_this, payload);
+      };
+      if (!isFunction(descriptor.get)) {
+        newDescriptor.get = function () {
+          return function (payload) {
+            return _this.context.commit(name, payload);
           };
-        }
-      }
-
-      // vuex actions
-      if (isFunction(descriptor.value)) {
-        newDescriptor.value = (payload) => {
-          return this.context.dispatch(name, payload)
-        };
-        this.actions[name] = (context, payload) => {
-          return descriptor.value.call(this, payload)
         };
       }
-      Object.defineProperty(this, name, newDescriptor);
-    });
+    }
 
-    Object.assign(this.actions, {
-      [_actionName]: {
-        root: true,
-        handler: (context) => {
-          this.context = context;
-          Object.defineProperty(this, 'state', {
-            get: () => {
-              return this.context.state
-            },
-            set () {
-              throwError('You should not update the module state directly');
-            }
-          });
+    // vuex actions
+    if (isFunction(descriptor.value)) {
+      newDescriptor.value = function (payload) {
+        return _this.context.dispatch(name, payload);
+      };
+      _this.actions[name] = function (context, payload) {
+        return descriptor.value.call(_this, payload);
+      };
+    }
+    Object.defineProperty(_this, name, newDescriptor);
+  });
+
+  _extends(this.actions, defineProperty({}, _actionName, {
+    root: true,
+    handler: function handler(context) {
+      _this.context = context;
+      Object.defineProperty(_this, 'state', {
+        get: function get$$1() {
+          return _this.context.state;
+        },
+        set: function set$$1() {
+          throwError('You should not update the module state directly');
         }
-      }
-    });
-  }
-}
+      });
+    }
+  }));
+};
 
-VuexClass.init = function init () {
-  return store => {
+
+VuexClass.init = function init() {
+  return function (store) {
     store.dispatch(_actionName);
-  }
+  };
 };
 
 module.exports = VuexClass;

@@ -30,7 +30,11 @@
   },
   "homepage": "https://github.com/lzxb/vuex-class#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-stage-0": "^6.24.1",
     "cypress": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -39,6 +43,7 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0",
     "vue": "^2.5.16",
     "vuex": "^3.0.1"
