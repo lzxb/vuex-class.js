@@ -30,15 +30,30 @@
     return descriptors
   };
 
+  const throwError = (msg) => {
+    throw new Error(`[vuex-class] ${msg}`)
+  };
+
   class VuexClass {
     constructor () {
       const descriptors = getDescriptors(getPrototypes(this));
 
-      this.context = null;
       this.state = {};
       this.getters = {};
       this.mutations = {};
       this.actions = {};
+      Object.defineProperty(this, 'context', {
+        _context: null,
+        get () {
+          if (!this._context) {
+            throwError(`Please call the 'new Vuex.store({ plusins: [ VuexClass.init() ] })' method`);
+          }
+          return this._context
+        },
+        set (context) {
+          this._context = context;
+        }
+      });
       Object.keys(descriptors).forEach(name => {
         if (name === 'constructor') return
         const descriptor = descriptors[name];
@@ -86,6 +101,14 @@
       this.actions[_actionName] = (context) => {
         if (this.context) return
         this.context = context;
+        Object.defineProperty(this, 'state', {
+          get: () => {
+            return this.context.state
+          },
+          set () {
+            throwError('You should not update the module state directly');
+          }
+        });
       };
       Object.assign(this.actions, {
         [_actionName]: {
