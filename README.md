@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/dm/vuex-class.js.svg)](https://www.npmjs.com/package/vuex-class.js)
 [![npm](https://img.shields.io/npm/dt/vuex-class.js.svg)](https://www.npmjs.com/package/vuex-class.js)
 
-Use es6class to write the vuex module, making the code easier to maintain and expand.
+Use es6 class to write the vuex module, making the code easier to maintain and expand.
 
 ### Installing
 ```bash
