@@ -1,3 +1,5 @@
+import uglify from 'rollup-plugin-uglify'
+
 export default [
   {
     input: 'src/index.js',
@@ -13,7 +15,10 @@ export default [
       name: 'VuexClass',
       file: 'dist/vuex-class.min.js',
       format: 'umd'
-    }
+    },
+    plugins: [
+      uglify()
+    ]
   },
   {
     input: 'src/index.js',
