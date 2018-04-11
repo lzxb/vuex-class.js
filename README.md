@@ -13,8 +13,8 @@ npm install vuex-class.js --save
 ```
 
 ### Document
-[English](./ZH-CN-README.md)
-[中文](./ZH-CN-README.md)
+- [English](./README.md)
+- [中文](./ZH-CN-README.md)
 
 ### Example
 ```javascript
