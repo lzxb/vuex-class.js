@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lzxb/vuex-class.git"
+    "url": "git+https://github.com/lzxb/vuex-class.js.git"
   },
   "author": "狼族小狈",
   "license": "MIT",
