@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexClass from '../../dist/vuex-class.esm'
+import istanbul from 'istanbul-lib-coverage'
+import VuexClass from '../../src/index'
 
 Vue
   .use(Vuex)
@@ -151,5 +152,16 @@ describe('vuex class', () => {
       `Error: [vuex-class] You should not update the module state directly`
     ])
     expect(store.state.count).equals(0)
+
+    const map = istanbul.createCoverageMap({})
+
+    const coverage = window.__coverage__
+    if (coverage) {
+      map.merge(coverage)
+    }
+    window.cy
+      .exec('rimraf coverage && rimraf .nyc_output')
+      .writeFile('.nyc_output/out.json', JSON.stringify(map), { log: false })
+      .exec('nyc report --reporter=html', { log: false })
   })
 })

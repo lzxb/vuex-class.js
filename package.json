@@ -8,11 +8,12 @@
   "scripts": {
     "dev": "rollup --config --watch",
     "build": "rollup --config",
-    "test": "npm run lint && npm run e2e:run",
+    "test": "npm run lint && npm run e2e:run && npm run coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "e2e:open": "cypress open",
-    "e2e:run": "cypress run"
+    "e2e:run": "cypress run",
+    "coverage": "nyc report --reporter=text-lcov --reporter=html | coveralls"
   },
   "repository": {
     "type": "git",
@@ -31,11 +32,13 @@
   },
   "homepage": "https://github.com/lzxb/vuex-class#readme",
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^2.0.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-stage-0": "^6.24.1",
+    "coveralls": "^3.0.0",
     "cypress": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -43,6 +46,9 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "nyc": "^11.6.0",
+    "rimraf": "^2.6.2",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0",
