@@ -1,0 +1,79 @@
+使用ES6 class来编写vuex模块，使得代码更易于维护和拓展
+
+### 安装
+```bash
+npm install vuex-class.js --save
+```
+
+### 使用
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+import VuexClass from 'vuex-class.js'
+
+Vue
+  .use(Vuex)
+
+class MyStoreRoot extends VuexClass {
+  constructor () {
+    super()
+    this.strict = process.env.NODE_ENV !== 'production'
+    this.state = {
+      count: 0
+    }
+    // 注意：子模块是没有 plugins 选项的
+    this.plugins = [
+      VuexClass.init()
+    ]
+    this.modules = {
+      chlid: new Chlid()
+    }
+  }
+  // mutations
+  set setCount (count) {
+    this.state.count = count
+  }
+  // getters
+  get countText () {
+    return `text:${this.state.count}`
+  }
+  // actions
+  clickCount () {
+    setTimeout(() => {
+      // 两种提交 mutation 的方法
+      // 1、直接赋值
+      // this.setCount = 1000
+      // 2、调用方法，注意：如果 class 上面有了 get setCount 属性的话，则不会存在此方法
+      // this.setCount(1000)
+    })
+  }
+}
+
+class Chlid extends VuexClass {
+  constructor () {
+    super()
+    this.state = {
+      isBtn: false
+    }
+    this.namespaced = true
+  }
+  set switchBtn (payload) {
+    this.state.isBtn = !this.state.isBtn
+  }
+  get text () {
+    return this.state.isBtn ? 'true' : 'false'
+  }
+}
+
+const myStoreRoot = new MyStoreRoot()
+const store = new Vuex.Store(myStoreRoot)
+
+console.log(myStoreRoot.countText) // text:0
+console.log(myStoreRoot.modules.chlid.text) // false
+
+myStoreRoot.setCount = 666
+myStoreRoot.modules.chlid.switchBtn()
+console.log(myStoreRoot.countText) // text:666
+console.log(myStoreRoot.modules.chlid.text) // true
+
+```
