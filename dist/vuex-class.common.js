@@ -38,16 +38,16 @@ class VuexClass {
     this.getters = {};
     this.mutations = {};
     this.actions = {};
+    let _context = null;
     Object.defineProperty(this, 'context', {
-      _context: null,
       get () {
-        if (!this._context) {
+        if (!_context) {
           throwError(`Please call the 'new Vuex.store({ plusins: [ VuexClass.init() ] })' method`);
         }
-        return this._context
+        return _context
       },
       set (context) {
-        this._context = context;
+        _context = context;
       }
     });
     Object.keys(descriptors).forEach(name => {
@@ -94,23 +94,19 @@ class VuexClass {
       Object.defineProperty(this, name, newDescriptor);
     });
 
-    this.actions[_actionName] = (context) => {
-      if (this.context) return
-      this.context = context;
-      Object.defineProperty(this, 'state', {
-        get: () => {
-          return this.context.state
-        },
-        set () {
-          throwError('You should not update the module state directly');
-        }
-      });
-    };
     Object.assign(this.actions, {
       [_actionName]: {
         root: true,
         handler: (context) => {
           this.context = context;
+          Object.defineProperty(this, 'state', {
+            get: () => {
+              return this.context.state
+            },
+            set () {
+              throwError('You should not update the module state directly');
+            }
+          });
         }
       }
     });
