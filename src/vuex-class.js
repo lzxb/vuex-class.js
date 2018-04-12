@@ -1,4 +1,4 @@
-const _actionName = '_[vuex-class]_init'
+const _actionName = '_[vuex-class]_bind_class'
 
 const isFunction = (any) => {
   return typeof any === 'function'
@@ -31,7 +31,6 @@ const throwError = (msg) => {
 export default class VuexClass {
   constructor () {
     const descriptors = getDescriptors(getPrototypes(this))
-
     this.state = {}
     this.getters = {}
     this.mutations = {}
@@ -96,7 +95,9 @@ export default class VuexClass {
       [_actionName]: {
         root: true,
         handler: (context) => {
+          const isBind = !!_context
           this.context = context
+          if (isBind) return
           Object.defineProperty(this, 'state', {
             get: () => {
               return this.context.state
@@ -112,7 +113,14 @@ export default class VuexClass {
 }
 
 VuexClass.init = function init () {
-  return store => {
-    store.dispatch(_actionName)
+  return (store) => {
+    VuexClass.bindClass(store)
+    store.subscribe(mutation => {
+      VuexClass.bindClass(store)
+    })
   }
+}
+
+VuexClass.bindClass = function bindClass (store) {
+  store.dispatch(_actionName)
 }
