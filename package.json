@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --fix",
     "e2e:open": "cypress open",
     "e2e:run": "cypress run",
-    "coverage": "nyc report --reporter=text-lcov --reporter=html | coveralls"
+    "coverage": "nyc report --reporter=html && nyc report --reporter=text-lcov --reporter=html | coveralls"
   },
   "repository": {
     "type": "git",

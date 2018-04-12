@@ -161,6 +161,5 @@ describe('vuex class', () => {
     }
     window.cy
       .writeFile('.nyc_output/out.json', JSON.stringify(map), { log: false })
-      .exec('nyc report --reporter=html', { log: false })
   })
 })
