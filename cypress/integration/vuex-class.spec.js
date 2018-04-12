@@ -160,7 +160,6 @@ describe('vuex class', () => {
       map.merge(coverage)
     }
     window.cy
-      .exec('rimraf coverage && rimraf .nyc_output')
       .writeFile('.nyc_output/out.json', JSON.stringify(map), { log: false })
       .exec('nyc report --reporter=html', { log: false })
   })

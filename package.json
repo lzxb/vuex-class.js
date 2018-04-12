@@ -48,7 +48,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "istanbul-instrumenter-loader": "^3.0.1",
     "nyc": "^11.6.0",
-    "rimraf": "^2.6.2",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0",
