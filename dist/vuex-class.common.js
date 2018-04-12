@@ -35,7 +35,7 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-var _actionName = '_[vuex-class]_init';
+var _actionName = '_[vuex-class]_bind_class';
 
 var isFunction = function isFunction(any) {
   return typeof any === 'function';
@@ -71,7 +71,6 @@ var VuexClass = function VuexClass() {
   classCallCheck(this, VuexClass);
 
   var descriptors = getDescriptors(getPrototypes(this));
-
   this.state = {};
   this.getters = {};
   this.mutations = {};
@@ -135,7 +134,9 @@ var VuexClass = function VuexClass() {
   _extends(this.actions, defineProperty({}, _actionName, {
     root: true,
     handler: function handler(context) {
+      var isBind = !!_context;
       _this.context = context;
+      if (isBind) return;
       Object.defineProperty(_this, 'state', {
         get: function get$$1() {
           return _this.context.state;
@@ -151,8 +152,15 @@ var VuexClass = function VuexClass() {
 
 VuexClass.init = function init() {
   return function (store) {
-    store.dispatch(_actionName);
+    VuexClass.bindClass(store);
+    store.subscribe(function (mutation) {
+      VuexClass.bindClass(store);
+    });
   };
+};
+
+VuexClass.bindClass = function bindClass(store) {
+  store.dispatch(_actionName);
 };
 
 module.exports = VuexClass;
