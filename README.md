@@ -35,7 +35,7 @@ class MyStoreRoot extends VuexClass {
     this.state = {
       count: 0
     }
-    // Note: the submodule does not have the bugins option
+    // Note: the sub module has no plugins option
     this.plugins = [
       VuexClass.init()
     ]
