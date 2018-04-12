@@ -12,9 +12,11 @@
 npm install vuex-class.js --save
 ```
 
+
 ### 文档
 - [English](./README.md)
 - [中文](./ZH-CN-README.md)
+
 
 ### 使用
 ```javascript
@@ -88,6 +90,44 @@ console.log(myStoreRoot.countText) // text:666
 console.log(myStoreRoot.modules.chlid.text) // true
 
 ```
+
+
+### API
+- `VuexClass.init`   
+  创建store实例的时候调用
+
+  ```javascript
+
+    const store = new Vuex.Store({
+      // ...
+      plugins: [
+        VuexClass.init()
+      ]
+    })
+
+  ```
+
+- `VuexClass.bindClass`  
+  替换 store 的根状态时，需要重新绑定 class
+  ```javascript
+
+    const store = new Vuex.Store({
+      // ...
+      state: {
+        // ...
+      },
+      plugins: [
+        VuexClass.init()
+      ]
+    })
+    store.replaceState({
+      // ...
+    })
+  store.replaceState()
+  VuexClass.bindClass(store)
+
+  ```
+
 
 ### License
 MIT

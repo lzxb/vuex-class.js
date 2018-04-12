@@ -7,14 +7,17 @@
 
 Use es6 class to write the vuex module, making the code easier to maintain and expand.
 
+
 ### Installing
 ```bash
 npm install vuex-class.js --save
 ```
 
+
 ### Document
 - [English](./README.md)
 - [中文](./ZH-CN-README.md)
+
 
 ### Example
 ```javascript
@@ -88,6 +91,44 @@ console.log(myStoreRoot.countText) // text:666
 console.log(myStoreRoot.modules.chlid.text) // true
 
 ```
+
+
+### API
+- `VuexClass.init`   
+  When the store instance is created, the call
+
+  ```javascript
+
+    const store = new Vuex.Store({
+      // ...
+      plugins: [
+        VuexClass.init()
+      ]
+    })
+
+  ```
+
+- `VuexClass.bindClass`   
+  When replacing the root state of store, we need to re bind class.
+  ```javascript
+
+    const store = new Vuex.Store({
+      // ...
+      state: {
+        // ...
+      },
+      plugins: [
+        VuexClass.init()
+      ]
+    })
+    store.replaceState({
+      // ...
+    })
+  store.replaceState()
+  VuexClass.bindClass(store)
+
+  ```
+
 
 ### License
 MIT
