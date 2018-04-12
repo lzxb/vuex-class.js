@@ -3,5 +3,3 @@ node_modules/
 package-lock.json
 *.log
 cypress/videos/*
-coverage/*
-.nyc_output/*
