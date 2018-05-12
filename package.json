@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "rollup --config --watch",
     "build": "rollup --config",
-    "test": "npm run lint && npm run e2e:run && npm run coverage",
+    "test": "npm run lint && npm run build && npm run e2e:run && npm run coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "e2e:open": "cypress open",
