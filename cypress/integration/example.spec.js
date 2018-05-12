@@ -97,7 +97,7 @@ console.log(vm.three === one.modules.two.modules.three) // true
 const { describe, it, expect } = window
 
 describe('example', () => {
-  it('vue install', () => {
+  it('run done', () => {
     expect(one.countText).equals('text:666')
     expect(one.modules.two.text).equals('true')
   })

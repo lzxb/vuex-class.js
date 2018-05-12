@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import istanbul from 'istanbul-lib-coverage'
-import VuexClass from 'vuex-class.js'
+import VuexClass from '../../src/index'
 
 Vue
   .use(VuexClass)

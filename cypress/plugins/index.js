@@ -6,7 +6,7 @@ module.exports = (on, config) => {
     webpackOptions: {
       resolve: {
         alias: {
-          'vuex-class.js': path.resolve(__dirname, '../../dist/vuex-class.esm.js')
+          'vuex-class.js': path.resolve(__dirname, '../../src/index.js')
         }
       },
       module: {
