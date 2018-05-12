@@ -212,7 +212,7 @@
           this._vuexClass = vuexClass;
         }
         if (!mapVuexClasses) return;
-        _extends(this, VuexClass.mapVuexClasses(this._vuexClass, mapVuexClasses));
+        _extends(this, VuexClass.mapVuexClasses(this.$vuexClass, mapVuexClasses));
       },
       destroyed: function destroyed() {
         if (!isExist(this)) return;

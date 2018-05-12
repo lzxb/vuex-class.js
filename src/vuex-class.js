@@ -164,7 +164,7 @@ VuexClass.install = function install (Vue) {
         this._vuexClass = vuexClass
       }
       if (!mapVuexClasses) return
-      Object.assign(this, VuexClass.mapVuexClasses(this._vuexClass, mapVuexClasses))
+      Object.assign(this, VuexClass.mapVuexClasses(this.$vuexClass, mapVuexClasses))
     },
     destroyed () {
       if (!isExist(this)) return
