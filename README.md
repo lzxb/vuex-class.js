@@ -26,9 +26,10 @@ import Vuex from 'vuex'
 import VuexClass from 'vuex-class.js'
 
 Vue
+  .use(VuexClass)
   .use(Vuex)
 
-class MyStoreRoot extends VuexClass {
+class One extends VuexClass {
   constructor () {
     super()
     this.strict = process.env.NODE_ENV !== 'production'
@@ -40,7 +41,7 @@ class MyStoreRoot extends VuexClass {
       VuexClass.init()
     ]
     this.modules = {
-      chlid: new Chlid()
+      two: new Two()
     }
   }
   // mutations
@@ -63,11 +64,14 @@ class MyStoreRoot extends VuexClass {
   }
 }
 
-class Chlid extends VuexClass {
+class Two extends VuexClass {
   constructor () {
     super()
     this.state = {
       isBtn: false
+    }
+    this.modules = {
+      three: new Three()
     }
     this.namespaced = true
   }
@@ -79,22 +83,45 @@ class Chlid extends VuexClass {
   }
 }
 
-const myStoreRoot = new MyStoreRoot()
-const store = new Vuex.Store(myStoreRoot)
+class Three extends VuexClass {
+  constructor () {
+    super()
+    this.state = {}
+    this.namespaced = true
+    // ...
+  }
+}
 
-console.log(myStoreRoot.countText) // text:0
-console.log(myStoreRoot.modules.chlid.text) // false
+const one = new One()
+const store = new Vuex.Store(one)
 
-myStoreRoot.setCount = 666
-myStoreRoot.modules.chlid.switchBtn()
-console.log(myStoreRoot.countText) // text:666
-console.log(myStoreRoot.modules.chlid.text) // true
+console.log(one.countText) // 'text:0'
+console.log(one.modules.two.text) // 'false'
+
+one.setCount = 666
+one.modules.two.switchBtn()
+console.log(one.countText) // 'text:666'
+console.log(one.modules.two.text) // 'true'
+
+const vm = new Vue({
+  store,
+  vuexClass: one,
+  mapVuexClasses: { // Join the class in the component
+    one: '',
+    two: 'two',
+    three: 'two/three'
+  }
+})
+
+console.log(vm.one === one) // true
+console.log(vm.two === one.modules.two) // true
+console.log(vm.three === one.modules.two.modules.three) // true
 
 ```
 
 
 ### API
-- `VuexClass.init`   
+- `VuexClass.init()`   
   When the store instance is created, the call
 
   ```javascript
@@ -108,7 +135,7 @@ console.log(myStoreRoot.modules.chlid.text) // true
 
   ```
 
-- `VuexClass.bindClass`   
+- `VuexClass.bindClass(new Vuex.Store())`  
   When replacing the root state of store, we need to re bind class.
   ```javascript
 
@@ -129,6 +156,19 @@ console.log(myStoreRoot.modules.chlid.text) // true
 
   ```
 
+- `VuexClass.mapVuexClasses(new VuexClass(), { ... })`
+  0.0.6 版本新增，用来查找模块及其子模块，并且返回相关的class
+  ```javascript
+    const classes = VuexClass.mapVuexClasses(one, {
+      one: '',
+      two: 'two',
+      three: 'two/three'
+    })
+
+    console.log(classes.one === one) // true
+    console.log(classes.two === one.modules.two) // true
+    console.log(classes.three === one.modules.two.modules.three) // true
+  ```
 
 ### License
 MIT

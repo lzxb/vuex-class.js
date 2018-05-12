@@ -1,8 +1,14 @@
 const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+const path = require('path')
 
 module.exports = (on, config) => {
   on('file:preprocessor', webpackPreprocessor({
     webpackOptions: {
+      resolve: {
+        alias: {
+          'vuex-class.js': path.resolve(__dirname, '../../dist/vuex-class.esm.js')
+        }
+      },
       module: {
         rules: [
           {
