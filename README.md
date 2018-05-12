@@ -157,7 +157,7 @@ console.log(vm.three === one.modules.two.modules.three) // true
   ```
 
 - `VuexClass.mapVuexClasses(new VuexClass(), { ... })`
-  0.0.6 版本新增，用来查找模块及其子模块，并且返回相关的class
+  The 0.0.6 version is added to find the module and its sub modules, and return the relevant class.     
   ```javascript
     const classes = VuexClass.mapVuexClasses(one, {
       one: '',
