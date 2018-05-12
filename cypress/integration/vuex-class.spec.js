@@ -4,11 +4,51 @@ import istanbul from 'istanbul-lib-coverage'
 import VuexClass from '../../src/index'
 
 Vue
+  .use(VuexClass)
   .use(Vuex)
 
 const { describe, it, expect } = window
 
 describe('vuex class', () => {
+  it('vue install', () => {
+    class Chlid extends VuexClass {
+      constructor () {
+        super()
+        this.state = {}
+      }
+    }
+
+    class MyVuexClass extends VuexClass {
+      constructor () {
+        super()
+        this.state = {}
+        this.strict = true
+        this.plugins = [
+          VuexClass.init()
+        ]
+        this.modules = {
+          chlid: new Chlid()
+        }
+      }
+    }
+    const vuexClass = new MyVuexClass()
+    const store = new Vuex.Store(vuexClass)
+    const vm = new Vue({
+      vuexClass,
+      store,
+      mapVuexClasses: {
+        vuexClass: '',
+        vuexClass2: '/',
+        vuexClassChlid: 'chlid'
+      }
+    })
+
+    expect(vm.$vuexClass).equals(vuexClass)
+    expect(vm.vuexClass).equals(vuexClass)
+    expect(vm.vuexClass2).equals(vuexClass)
+    expect(vm.vuexClassChlid).equals(vuexClass.modules.chlid)
+  })
+
   it('vuex class update', () => {
     const mutations = []
     class MyVuexClass extends VuexClass {
@@ -380,9 +420,18 @@ describe('vuex class', () => {
       errors.push(e.toString())
     }
 
+    try {
+      VuexClass.mapVuexClasses(myVuexClass, {
+        vuexClass: 'test/ok'
+      })
+    } catch (e) {
+      errors.push(e.toString())
+    }
+
     expect(errors).to.deep.equal([
       `Error: [vuex-class] Please call the 'new Vuex.store({ plusins: [ VuexClass.init() ] })' method`,
-      `Error: [vuex-class] You should not update the module state directly`
+      `Error: [vuex-class] You should not update the module state directly`,
+      `Error: [vuex-class] 'test/ok' module is not exist`
     ])
     expect(store.state.count).equals(0)
 

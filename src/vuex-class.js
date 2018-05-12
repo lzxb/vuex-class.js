@@ -124,3 +124,50 @@ VuexClass.init = function init () {
 VuexClass.bindClass = function bindClass (store) {
   store.dispatch(_actionName)
 }
+
+VuexClass.mapVuexClasses = function mapVuexClasses (vuexClass, options) {
+  const classes = {}
+  Object.keys(options).forEach(name => {
+    const paths = options[name].split('/')
+    let i = 0
+    let current = vuexClass
+    while (i < paths.length) {
+      const pathName = paths[i]
+      if (pathName) {
+        if (current.modules && pathName in current.modules && current.modules[pathName] instanceof VuexClass) {
+          current = current.modules[pathName]
+        } else {
+          throwError(`'${options[name]}' module is not exist`)
+        }
+      }
+      i++
+    }
+    classes[name] = current
+  })
+  return classes
+}
+
+VuexClass.install = function install (Vue) {
+  const isExist = (vm) => {
+    const { vuexClass } = vm.$options
+    return !!vuexClass || vuexClass instanceof VuexClass
+  }
+
+  Object.defineProperty(Vue.prototype, '$vuexClass', {
+    get () { return this.$root._vuexClass }
+  })
+
+  Vue.mixin({
+    beforeCreate () {
+      const { vuexClass, mapVuexClasses } = this.$options
+      if (!isExist(this)) return
+      this._vuexClass = vuexClass
+      if (!mapVuexClasses) return
+      Object.assign(this, VuexClass.mapVuexClasses(this._vuexClass, mapVuexClasses))
+    },
+    destroyed () {
+      if (!isExist(this)) return
+      delete this._vuexClass
+    }
+  })
+}

@@ -163,4 +163,57 @@ VuexClass.bindClass = function bindClass(store) {
   store.dispatch(_actionName);
 };
 
+VuexClass.mapVuexClasses = function mapVuexClasses(vuexClass, options) {
+  var classes = {};
+  Object.keys(options).forEach(function (name) {
+    var paths = options[name].split('/');
+    var i = 0;
+    var current = vuexClass;
+    while (i < paths.length) {
+      var pathName = paths[i];
+      if (pathName) {
+        if (current.modules && pathName in current.modules && current.modules[pathName] instanceof VuexClass) {
+          current = current.modules[pathName];
+        } else {
+          throwError('\'' + options[name] + '\' module is not exist');
+        }
+      }
+      i++;
+    }
+    classes[name] = current;
+  });
+  return classes;
+};
+
+VuexClass.install = function install(Vue) {
+  var isExist = function isExist(vm) {
+    var vuexClass = vm.$options.vuexClass;
+
+    return !!vuexClass || vuexClass instanceof VuexClass;
+  };
+
+  Object.defineProperty(Vue.prototype, '$vuexClass', {
+    get: function get$$1() {
+      return this.$root._vuexClass;
+    }
+  });
+
+  Vue.mixin({
+    beforeCreate: function beforeCreate() {
+      var _$options = this.$options,
+          vuexClass = _$options.vuexClass,
+          mapVuexClasses = _$options.mapVuexClasses;
+
+      if (!isExist(this)) return;
+      this._vuexClass = vuexClass;
+      if (!mapVuexClasses) return;
+      _extends(this, VuexClass.mapVuexClasses(this._vuexClass, mapVuexClasses));
+    },
+    destroyed: function destroyed() {
+      if (!isExist(this)) return;
+      delete this._vuexClass;
+    }
+  });
+};
+
 module.exports = VuexClass;
