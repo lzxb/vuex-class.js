@@ -33,7 +33,7 @@ describe('vuex class', () => {
     }
     const vuexClass = new MyVuexClass()
     const store = new Vuex.Store(vuexClass)
-    const vm = new Vue({
+    let vm = new Vue({
       vuexClass,
       store,
       mapVuexClasses: {
@@ -47,6 +47,13 @@ describe('vuex class', () => {
     expect(vm.vuexClass).equals(vuexClass)
     expect(vm.vuexClass2).equals(vuexClass)
     expect(vm.vuexClassChlid).equals(vuexClass.modules.chlid)
+
+    vm.$destroy()
+    expect(vm.$vuexClass).equals(undefined)
+
+    vm = new Vue({
+      store
+    })
   })
 
   it('vuex class update', () => {
