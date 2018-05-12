@@ -52,7 +52,8 @@ describe('vuex class', () => {
     expect(vm.$vuexClass).equals(undefined)
 
     vm = new Vue({
-      store
+      store,
+      vuexClass
     })
   })
 
