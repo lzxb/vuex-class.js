@@ -156,7 +156,7 @@ console.log(vm.three === one.modules.two.modules.three) // true
 
   ```
 
-- `VuexClass.mapVuexClasses(new VuexClass(), { ... })`
+- `VuexClass.mapVuexClasses(new VuexClass(), { ... })`  
   The 0.0.6 version is added to find the module and its sub modules, and return the relevant class.     
   ```javascript
     const classes = VuexClass.mapVuexClasses(one, {
