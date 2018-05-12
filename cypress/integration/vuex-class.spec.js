@@ -55,6 +55,8 @@ describe('vuex class', () => {
       store,
       vuexClass
     })
+    vm.$destroy()
+    expect(vm.$vuexClass).equals(undefined)
   })
 
   it('vuex class update', () => {
