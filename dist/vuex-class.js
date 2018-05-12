@@ -208,8 +208,9 @@
             vuexClass = _$options.vuexClass,
             mapVuexClasses = _$options.mapVuexClasses;
 
-        if (!isExist(this)) return;
-        this._vuexClass = vuexClass;
+        if (isExist(this)) {
+          this._vuexClass = vuexClass;
+        }
         if (!mapVuexClasses) return;
         _extends(this, VuexClass.mapVuexClasses(this._vuexClass, mapVuexClasses));
       },

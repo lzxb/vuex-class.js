@@ -160,8 +160,9 @@ VuexClass.install = function install (Vue) {
   Vue.mixin({
     beforeCreate () {
       const { vuexClass, mapVuexClasses } = this.$options
-      if (!isExist(this)) return
-      this._vuexClass = vuexClass
+      if (isExist(this)) {
+        this._vuexClass = vuexClass
+      }
       if (!mapVuexClasses) return
       Object.assign(this, VuexClass.mapVuexClasses(this._vuexClass, mapVuexClasses))
     },
