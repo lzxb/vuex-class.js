@@ -48,9 +48,9 @@ export default class VuexClass {
       }
     })
     Object.keys(descriptors).forEach(name => {
-      if (name === 'constructor') return
       const descriptor = descriptors[name]
       const newDescriptor = {}
+      if (name === 'constructor' || typeof descriptor === 'undefined') return
 
       // vuex getters
       if (isFunction(descriptor.get)) {
@@ -77,10 +77,14 @@ export default class VuexClass {
             }
           }
         }
+      } else if (isFunction(descriptor.value) && /^\$/.test(name)) {
+        newDescriptor.value = (payload) => {
+          return this.context.commit(name, payload)
+        }
       }
 
       // vuex actions
-      if (isFunction(descriptor.value)) {
+      if (isFunction(descriptor.value) && !/^\$/.test(name)) {
         newDescriptor.value = (payload) => {
           return this.context.dispatch(name, payload)
         }

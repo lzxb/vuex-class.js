@@ -86,9 +86,9 @@ var VuexClass = function VuexClass() {
     }
   });
   Object.keys(descriptors).forEach(function (name) {
-    if (name === 'constructor') return;
     var descriptor = descriptors[name];
     var newDescriptor = {};
+    if (name === 'constructor' || typeof descriptor === 'undefined') return;
 
     // vuex getters
     if (isFunction(descriptor.get)) {
@@ -115,10 +115,14 @@ var VuexClass = function VuexClass() {
           };
         };
       }
+    } else if (isFunction(descriptor.value) && /^\$/.test(name)) {
+      newDescriptor.value = function (payload) {
+        return _this.context.commit(name, payload);
+      };
     }
 
     // vuex actions
-    if (isFunction(descriptor.value)) {
+    if (isFunction(descriptor.value) && !/^\$/.test(name)) {
       newDescriptor.value = function (payload) {
         return _this.context.dispatch(name, payload);
       };
