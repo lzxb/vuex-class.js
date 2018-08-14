@@ -78,6 +78,9 @@ export default class VuexClass {
           }
         }
       } else if (isFunction(descriptor.value) && /^\$/.test(name)) {
+        this.mutations[name] = (state, payload) => {
+          return descriptor.value.call(this, payload)
+        }
         newDescriptor.value = (payload) => {
           return this.context.commit(name, payload)
         }

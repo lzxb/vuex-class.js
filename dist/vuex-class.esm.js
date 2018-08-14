@@ -116,6 +116,9 @@ var VuexClass = function VuexClass() {
         };
       }
     } else if (isFunction(descriptor.value) && /^\$/.test(name)) {
+      _this.mutations[name] = function (state, payload) {
+        return descriptor.value.call(_this, payload);
+      };
       newDescriptor.value = function (payload) {
         return _this.context.commit(name, payload);
       };
