@@ -37,6 +37,7 @@ export default class VuexClass {
     this.actions = {}
     let _context = null
     Object.defineProperty(this, 'context', {
+      enumerable: false,
       get () {
         if (!_context) {
           throwError(`Please call the 'new Vuex.store({ plusins: [ VuexClass.init() ] })' method`)

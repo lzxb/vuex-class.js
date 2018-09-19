@@ -75,6 +75,7 @@ var VuexClass = function VuexClass() {
   this.actions = {};
   var _context = null;
   Object.defineProperty(this, 'context', {
+    enumerable: false,
     get: function get$$1() {
       if (!_context) {
         throwError('Please call the \'new Vuex.store({ plusins: [ VuexClass.init() ] })\' method');
