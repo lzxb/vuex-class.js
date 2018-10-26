@@ -1,3 +1,7 @@
+
+## 此项目除了正常的bug修复，不再进行功能更新
+如果对状态管理感兴趣，可以看下 [Tms](https://github.com/FollowmeTech/tms)，文档更齐全
+
 ## vuex-class.js
 [![Coverage Status](https://coveralls.io/repos/github/lzxb/vuex-class.js/badge.svg?branch=master)](https://coveralls.io/github/lzxb/vuex-class.js?branch=master)
 [![Build Status](https://travis-ci.org/lzxb/vuex-class.js.svg?branch=master)](https://travis-ci.org/lzxb/vuex-class.js)
